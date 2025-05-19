@@ -49,14 +49,15 @@ Install the Email Worker Add-on on the same site as Itiner Workspace (e.g., `Def
 
 ### 3.4 Configuration
 Edit the `appsettings.json` file with the following parameters:
+> 💡 For reference, see the `email_worker_appsettings_sample.json` file located in the GitHub repository.
 
 #### Host Configuration
 ```json
 "Host": {
-  "WebHostUrl": "https://addonhostdnsname/workspace/emailworker",
-  "WSUrl": "http://workspacehostdnsname/workspace/api",
+  "WebHostUrl": "https://localhost:5001",
+  "WSUrl": "http://workspacehost/workspace/api",
   "WsApiKey": "test", // API key generated for integration user
-  "HealthCheckBaseUrl": "http://addonhostdnsname", // optional
+  "HealthCheckBaseUrl": "https://localhost:5001", // optional
   "CustomApiKey": "test",
   "PathBase": "/workspace/emailworker",
   "DebugMode": false,
@@ -81,6 +82,8 @@ Edit the `appsettings.json` file with the following parameters:
   "AttachEmailMessage": true, // If true, the incoming email itself will be attached to the workflow initiated (as a .msg file)
   "Host": "SMAIL01", // Host of exchange server
   "Port": "143", // Port of exchange server
+  "UserName": "user",
+  "Password": "password",
   "SecurityOptions": "None"
 }],
 "Storage": {

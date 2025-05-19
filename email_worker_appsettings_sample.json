@@ -1,0 +1,70 @@
+{
+    "Host": {
+        "WebHostUrl": "https://localhost:5001",
+        "PathBase": "/workspace/emailworker",
+        "WSUrl": "http://workspacehost/workspace/api",
+        "DebugMode": false,
+        "DisableRequestLog": false,
+        "DisableMetadata": true,
+        "PollIntervalInSeconds": "60",
+        "WsApiKey": "Set this to valid value",
+		"CustomApiKey": "Set this to valid value"
+	},
+
+    "EmailServers": [{
+            "ConfigName": "Teszt",
+            "ItinerTemplateUniqueName": "T001",
+            "ItinerStarterUserName": "integration",
+            "ItinerManagerUserName": "integration",
+            "ItinerDefaultUserName": "integration",
+			"Tags": [ "Email" ],
+			"SubjectVariable": "SubjectVariable",
+			"FromDisplayNameVariable": "FromDisplayNameVariable",
+			"FromEmailVariable": "FromEmailVariable",
+			"BodyVariable": "BodyVariable",
+			"AttachEmailMessage": true,
+            "Host": "SMAIL03",
+            "Port": "143",
+            "UserName": "Set this to valid value",
+            "Password": "Set this to valid value",
+            "SecurityOptions": "None"
+        }
+    ],
+	
+    "Hmac": {
+        "Secret": "Set this to valid value"
+    },
+    "Storage": {
+        "Password": "Set this to valid value"
+    },
+    "Reference": {
+        "Filter": ["Email"]
+    },
+    "Serilog": {
+        "Using": ["Serilog.Sinks.Seq"],
+        "LevelSwitches": {
+            "$controlSwitch": "Information"
+        },
+        "MinimumLevel": {
+            "ControlledBy": "$controlSwitch",
+            "Override": {
+                "System": "Warning",
+                "Microsoft": "Error"
+            }
+        },
+
+        "WriteTo": [{
+                "Name": "Seq",
+                "Args": {
+                    "serverUrl": "http://global_seq:5341",
+                    "apiKey": ""
+                }
+            }
+        ],
+
+        "Enrich": ["FromLogContext", "WithMachineName", "WithThreadId"],
+        "Properties": {
+            "Application": "EmailWorker"
+        }
+    }
+}
