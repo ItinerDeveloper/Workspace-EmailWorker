@@ -8,7 +8,7 @@
         "DisableMetadata": true,
         "PollIntervalInSeconds": "60",
         "WsApiKey": "Set this to valid value",
-		"CustomApiKey": "Set this to valid value"
+	"CustomApiKey": "Set this to valid value"
 	},
 
     "EmailServers": [{
