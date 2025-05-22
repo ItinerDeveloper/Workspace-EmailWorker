@@ -84,7 +84,7 @@ Edit the `appsettings.json` file with the following parameters:
   "FromEmailVariable": "FromEmailVariable", // If given, the email address of the sender will be extracted into the variable given here (optional)
   "BodyVariable": "BodyVariable", // If given, the email body will be extracted into the variable given here (optional)
   "AttachEmailMessage": true, // If true, the incoming email itself will be attached to the workflow initiated (as a .msg file)
-  "Host": "SMAIL01", // Host of exchange server
+  "Host": "SNAIL", // Host of exchange server
   "Port": "143", // Port of exchange server
   "UserName": "user",
   "Password": "password",
