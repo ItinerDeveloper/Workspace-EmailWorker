@@ -11,8 +11,10 @@ The Email Worker Integration Service is designed to initiate workflows in the **
 If a workflow cannot be initiated due to an error, the email is marked as **read** to prevent reprocessing and flagged to indicate that the workflow initiation failed.  
 
 ### Prerequisites  
-- A **dedicated email address** on the Exchange Server is required for the service to operate.  
-- The service must have the necessary credentials and permissions to access and monitor the specified email address.  
+- A **dedicated email address** is required for the service to operate.  
+- The service must have the necessary permissions to access and monitor the specified mailbox.  
+- If Microsoft Exchange Online is used, Basic Authentication with username and password must not be assumed to be available for the long term.  
+- For Exchange Online environments, use a Modern Authentication compatible approach wherever possible. If this add-on is configured with username/password only, treat that configuration as suitable for on-premises Exchange or other environments where such authentication is still supported.  
 
 ### Key Features  
 - **Periodic Email Check**: The service checks for unread emails at regular intervals.  
@@ -23,7 +25,10 @@ If a workflow cannot be initiated due to an error, the email is marked as **read
 - **Error Handling**: If workflow initiation fails, the email is marked as read and flagged to prevent reprocessing.  
 
 ## Configuration Parameters  
-The following parameters will be set in the Itiner Workspace configurations:  
+> Important:
+> The sample configuration in this repository uses a classic host/port/username/password model. This can still be applicable for on-premises Exchange or other compatible mail servers, but it may not be sufficient for Microsoft Exchange Online tenants that require Modern Authentication.
+>
+> The following parameters will be set in the Itiner Workspace configurations:  
 
 - **ConfigName**: A name for the configuration instance (e.g., "Test").  
 - **ItinerTemplateUniqueName**: The unique identifier of the workflow template that is initiated in Itiner Workspace.  
@@ -32,9 +37,9 @@ The following parameters will be set in the Itiner Workspace configurations:
 - **ItinerDefaultUserName**: The default user of the initiated workflow.  
 - **Host**: The hostname or IP address of the email server (e.g., "SMAIL09").  
 - **Port**: The port used for the email server connection (e.g., "143").  
-- **UserName**: The username used to log in to the email account.  
-- **Password**: The password for the email account (ensure this is securely managed and not left empty in production environments).  
-- **SecurityOptions**: The security settings for the email server connection (e.g., "None" for unencrypted connections, or options like "SSL/TLS" if supported).  
+- **UserName**: The username used to access the mailbox.  
+- **Password**: The password for the mailbox account. For Exchange Online, username/password based legacy authentication should not be considered a future-proof option.  
+- **SecurityOptions**: The security settings for the email server connection.  
 - **Tags**: A list of tags to be added to files attached to the workflow (e.g., `["EmailWorker", "Test"]`).  
 - **SubjectVariable**: The workflow variable that will store the email subject (e.g., `EmailWorkerSubject`).  
 - **FromDisplayNameVariable**: The workflow variable that will store the sender’s display name (e.g., `EmailWorkerFromName`).  
