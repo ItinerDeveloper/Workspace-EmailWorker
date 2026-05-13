@@ -7,7 +7,8 @@
 - Internet Information Services (IIS)
 - HTTPS certificate 
 - Installed Itiner Workspace application
-- A **working Exchange Server** configured and accessible (e.g., Exchange Web Services), with a dedicated email address monitored by the addon.
+- A working mail server environment configured and accessible, with a dedicated email address monitored by the add-on.
+  For Microsoft Exchange Online, verify in advance whether the required protocol and authentication method are supported in the tenant. Do not assume that Basic Authentication with username and password will remain available.
 
 ### 1.2 File System
 The Email Worker Add-on **must be located in the same folder as the Itiner Workspace application**.  
@@ -55,6 +56,13 @@ Install the Email Worker Add-on on the same site as Itiner Workspace (e.g., `Def
 Edit the `appsettings.json` file with the following parameters:
 > 💡 For reference, see the `email_worker_appsettings_sample.json` file located in the GitHub repository.
 
+> Important for Microsoft Exchange Online
+>
+> The sample configuration below uses a traditional connection model with host, port, username, and password.
+> This model is primarily suitable for on-premises Exchange or other mail servers that still support this authentication flow.
+> If the target mailbox is hosted in Exchange Online, review Microsoft’s current authentication requirements before deployment.
+> Basic Authentication must not be treated as a long-term supported option for Exchange Online.
+
 #### Host Configuration
 ```json
 "Host": {
@@ -84,16 +92,27 @@ Edit the `appsettings.json` file with the following parameters:
   "FromEmailVariable": "FromEmailVariable", // If given, the email address of the sender will be extracted into the variable given here (optional)
   "BodyVariable": "BodyVariable", // If given, the email body will be extracted into the variable given here (optional)
   "AttachEmailMessage": true, // If true, the incoming email itself will be attached to the workflow initiated (as a .msg file)
-  "Host": "SNAIL", // Host of exchange server
-  "Port": "143", // Port of exchange server
-  "UserName": "user",
-  "Password": "password",
+  "Host": "SNAIL", // Host of mail server
+  "Port": "143", // Port of mail server
+  "UserName": "user", // Legacy-style mailbox login
+  "Password": "password", // Legacy-style mailbox password
   "SecurityOptions": "None"
+  "MSOauth2": {
+		"Enabled": true,
+		"ClientId": "set this to the Azure app registration client ID",
+		"TenantId": "set this to the Microsoft Entra tenant ID",
+		"ClientSecret": "set this to the Azure app registration client secret"
+	}	
 }],
 "Storage": {
         "Password": "test" // This password has to match with the storage.password value in the Workspace appsettings.json
     },
 ```
+
+Notes:
+- `Host`, `Port`, `UserName`, and `Password` represent a legacy-style mailbox access configuration.
+- For Exchange Online, this configuration may require redesign or a Modern Authentication compatible implementation.
+- If this add-on version does not support Modern Authentication, it should be documented as on-premises focused when used with Microsoft Exchange environments.
 
 #### HMAC Configuration
 ```json
