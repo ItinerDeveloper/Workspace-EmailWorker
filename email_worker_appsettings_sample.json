@@ -25,9 +25,15 @@
 			"AttachEmailMessage": true,
             "Host": "your-mail-host",
             "Port": "Set this to valid value",
-            "UserName": "Set this to valid value",
-            "Password": "Set this to valid value",
+            "UserName": "Set this to valid value for environments that support credential-based login",
+            "Password": "Set this to valid value for environments that support credential-based login",
             "SecurityOptions": "None"
+			"MSOauth2": {
+				"Enabled": true,
+				"ClientId": "set this to the Azure app registration client ID",
+				"TenantId": "set this to the Microsoft Entra tenant ID",
+				"ClientSecret": "set this to the Azure app registration client secret"
+			}	
         }
     ],
 	
